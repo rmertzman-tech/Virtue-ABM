@@ -328,6 +328,11 @@
             margin-bottom: 10px;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .scenario-container {
             background: white;
             padding: 30px;
@@ -450,8 +455,8 @@
             </div>
 
             <div class="mode-description" id="modeDescription">
-                <strong>Individual Mode:</strong> Focus on personal virtue development through 10 scenarios. 
-                Track how your choices shape character over time. Based on classical Aristotelian ethics.
+                <strong>Individual Mode:</strong> Focus on personal virtue development through scenarios. 
+                Track how your choices shape character over time. Classical Aristotelian approach.
             </div>
 
             <div class="button-container" style="margin-top: 30px;">
@@ -459,12 +464,27 @@
                     Begin Simulation →
                 </button>
             </div>
+            
+            <div id="tutorialOffer" style="display: none; text-align: center; margin-top: 25px; padding: 25px; background: #e8f5e9; border-radius: 15px;">
+                <p style="font-size: 1.1em; line-height: 1.8; color: #2e7d32; margin-bottom: 20px;">
+                    <strong>🎓 First time in Community Mode?</strong><br>
+                    Take the 5-minute interactive tutorial to see exactly how choices ripple through networks.
+                </p>
+                <button class="btn-primary" onclick="startInteractiveTutorial()" style="background: linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%);">
+                    📖 Take Interactive Tutorial
+                </button>
+                <p style="margin-top: 15px;">
+                    <a href="#" onclick="document.getElementById('tutorialOffer').style.display='none'; return false;" style="color: #667eea; text-decoration: none;">
+                        Skip tutorial →
+                    </a>
+                </p>
+            </div>
         </div>
 
         <!-- Content Area -->
         <div class="content">
             <!-- Character Creation (Step 1) -->
-            <div class="step active" id="step1">
+            <div class="step" id="step1">
                 <h2>Create Your Character & Set Context</h2>
 
                 <!-- Institutional Context Selection (Community Mode Only) -->
@@ -542,7 +562,78 @@
             <div class="step" id="scenarioStep">
                 <!-- Community Dashboard (Community Mode Only) -->
                 <div id="communityDashboard" style="display: none;">
-                    <h2>Community Dashboard</h2>
+                    <h2>Your Community</h2>
+                    
+                    <!-- Character Stories Section -->
+                    <div class="explanation-box" style="background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-left-color: #667eea;">
+                        <h4>👥 Meet Your Close Friends</h4>
+                        <p style="margin-bottom: 20px;">You're directly connected to three people. They'll notice your choices and be influenced by your example.</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                            <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid #667eea;">
+                                <h4 style="color: #667eea; margin-bottom: 10px;">🎨 Sarah Chen</h4>
+                                <p style="font-size: 0.95em; color: #666; line-height: 1.6;">
+                                    Graphic designer at your company. Usually balanced but struggling with a difficult project deadline. 
+                                    Starting eudaimonia: <strong id="sarahStart">52</strong>
+                                </p>
+                                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Courage:</span>
+                                        <strong id="sarahCourage">48</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Eudaimonia:</span>
+                                        <strong id="sarahEudaimonia" style="color: #667eea;">52</strong>
+                                    </div>
+                                    <div id="sarahStatus" style="margin-top: 10px; padding: 10px; background: #fff; border-radius: 5px; font-size: 0.9em; color: #666;">
+                                        Observing your choices...
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid #667eea;">
+                                <h4 style="color: #667eea; margin-bottom: 10px;">⚖️ Marcus Rodriguez</h4>
+                                <p style="font-size: 0.95em; color: #666; line-height: 1.6;">
+                                    Legal assistant. Deeply principled but under pressure from management. Moral stress building. 
+                                    Starting eudaimonia: <strong id="marcusStart">45</strong>
+                                </p>
+                                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Justice:</span>
+                                        <strong id="marcusJustice">51</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Eudaimonia:</span>
+                                        <strong id="marcusEudaimonia" style="color: #FF9800;">45</strong>
+                                    </div>
+                                    <div id="marcusStatus" style="margin-top: 10px; padding: 10px; background: #fff; border-radius: 5px; font-size: 0.9em; color: #666;">
+                                        Watching to see what you do...
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid #667eea;">
+                                <h4 style="color: #667eea; margin-bottom: 10px;">🔬 Dr. Elena Patel</h4>
+                                <p style="font-size: 0.95em; color: #666; line-height: 1.6;">
+                                    Research scientist. Thoughtful and cautious. Seeking wise guidance on tough decision. 
+                                    Starting eudaimonia: <strong id="elenaStart">58</strong>
+                                </p>
+                                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Wisdom:</span>
+                                        <strong id="elenaWisdom">55</strong>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin: 5px 0;">
+                                        <span>Eudaimonia:</span>
+                                        <strong id="elenaEudaimonia" style="color: #4CAF50;">58</strong>
+                                    </div>
+                                    <div id="elenaStatus" style="margin-top: 10px; padding: 10px; background: #fff; border-radius: 5px; font-size: 0.9em; color: #666;">
+                                        Wondering what you'll do...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="community-stats">
                         <div class="stat-card">
@@ -556,14 +647,14 @@
                             <div class="stat-change" id="communityChange">Baseline</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Moral Debt</div>
+                            <div class="stat-label">Your Moral Debt</div>
                             <div class="stat-value" id="moralDebt">0</div>
-                            <div class="stat-change">Accumulated Vice</div>
+                            <div class="stat-change">Soul Integrity</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-label">Social Influence</div>
-                            <div class="stat-value" id="socialInfluence">3</div>
-                            <div class="stat-change">Connected Friends</div>
+                            <div class="stat-label">Institution Type</div>
+                            <div class="stat-value" style="font-size: 24px;" id="institutionType">🌱</div>
+                            <div class="stat-change" id="institutionName">Metabolic</div>
                         </div>
                     </div>
 
@@ -809,14 +900,27 @@
             document.getElementById('communityModeBtn').classList.toggle('active', mode === 'community');
             
             const description = document.getElementById('modeDescription');
+            const tutorialOffer = document.getElementById('tutorialOffer');
+            
             if (mode === 'individual') {
-                description.innerHTML = '<strong>Individual Mode:</strong> Focus on personal virtue development through scenarios. Track how your choices shape character over time. Based on classical Aristotelian ethics.';
+                description.innerHTML = '<strong>Individual Mode:</strong> Focus on personal virtue development through scenarios. Track how your choices shape character over time. Classical Aristotelian approach - no social dynamics, just you and your character.';
+                tutorialOffer.style.display = 'none';
             } else {
-                description.innerHTML = '<strong>Community Mode:</strong> Your character lives in a community of 20 agents. Watch how your choices ripple through social networks. See repair loops activate (BioBond, Civic, Institutional). Experience emergence: individual virtues → community patterns → institutional effects. Based on <em>Adaptive Moral Social Dynamics</em> framework.';
+                description.innerHTML = `
+                    <strong>Community Mode:</strong> Your character lives in a community with 3 close friends and 16 other people. 
+                    Watch how your choices ripple through social networks through <strong>social contagion</strong> (virtue spreads!). 
+                    See <strong>repair loops activate</strong> at three levels: BioBond (personal), Civic (peers), Institutional (policy). 
+                    Experience how <strong>metabolic vs extractive institutions</strong> enable or block soul repair. 
+                    Based on <em>Adaptive Moral Social Dynamics</em> framework (BROA+, PRF coherence, morphic fidelity).
+                `;
+                tutorialOffer.style.display = 'block';
             }
         }
 
         function startSimulation() {
+            // Hide mode selector
+            document.querySelector('.mode-selector').style.display = 'none';
+            // Show step 1
             showStep(1);
         }
 
@@ -858,8 +962,42 @@
             // Player agent
             state.community.push(state.player);
             
-            // 19 NPC agents with varying starting virtues
-            for (let i = 1; i < 20; i++) {
+            // Named characters: Sarah (1), Marcus (2), Elena (3)
+            state.community.push({
+                id: 1,
+                name: "Sarah Chen",
+                virtues: { courage: 48, temperance: 52, wisdom: 50, justice: 53 },
+                eudaimonia: 52,
+                stress: 15,
+                moralDebt: 0,
+                prfCoherence: 0.92,
+                history: []
+            });
+            
+            state.community.push({
+                id: 2,
+                name: "Marcus Rodriguez",
+                virtues: { courage: 49, temperance: 47, wisdom: 48, justice: 51 },
+                eudaimonia: 45,
+                stress: 25,
+                moralDebt: 5,
+                prfCoherence: 0.85,
+                history: []
+            });
+            
+            state.community.push({
+                id: 3,
+                name: "Dr. Elena Patel",
+                virtues: { courage: 52, temperance: 56, wisdom: 55, justice: 54 },
+                eudaimonia: 58,
+                stress: 10,
+                moralDebt: 0,
+                prfCoherence: 0.95,
+                history: []
+            });
+            
+            // 16 additional community members with varying starting virtues
+            for (let i = 4; i < 20; i++) {
                 state.community.push({
                     id: i,
                     virtues: {
@@ -868,27 +1006,45 @@
                         wisdom: 40 + Math.random() * 20,
                         justice: 40 + Math.random() * 20
                     },
-                    eudaimonia: 50 + (Math.random() - 0.5) * 20,
+                    eudaimonia: 45 + Math.random() * 15,
                     stress: Math.random() * 20,
-                    moralDebt: 0,
-                    prfCoherence: 0.9 + Math.random() * 0.1,
+                    moralDebt: Math.random() * 10,
+                    prfCoherence: 0.8 + Math.random() * 0.15,
                     history: []
                 });
             }
             
-            // Create social network (3-5 connections per agent)
-            state.socialNetwork = [];
+            // Create social network - player connected to Sarah, Marcus, Elena
+            state.socialNetwork = [
+                { source: 0, target: 1 }, // You → Sarah
+                { source: 0, target: 2 }, // You → Marcus
+                { source: 0, target: 3 }  // You → Elena
+            ];
+            
+            // Add additional connections for other agents
             state.community.forEach((agent, i) => {
-                const numConnections = 3 + Math.floor(Math.random() * 3);
-                for (let j = 0; j < numConnections; j++) {
-                    let target = Math.floor(Math.random() * 20);
-                    if (target !== i && !state.socialNetwork.some(e => 
-                        (e.source === i && e.target === target) || 
-                        (e.source === target && e.target === i))) {
-                        state.socialNetwork.push({ source: i, target: target });
+                if (i > 0 && i < 4) { // Named characters also connected to each other
+                    if (i === 1) state.socialNetwork.push({ source: 1, target: 2 });
+                    if (i === 2) state.socialNetwork.push({ source: 2, target: 3 });
+                }
+                
+                if (i >= 4) { // Other agents
+                    const numConnections = 2 + Math.floor(Math.random() * 3);
+                    for (let j = 0; j < numConnections; j++) {
+                        let target = Math.floor(Math.random() * 20);
+                        if (target !== i && !state.socialNetwork.some(e => 
+                            (e.source === i && e.target === target) || 
+                            (e.source === target && e.target === i))) {
+                            state.socialNetwork.push({ source: i, target: target });
+                        }
                     }
                 }
             });
+            
+            // Initialize character displays
+            updateCharacterDisplay(1, state.community[1]);
+            updateCharacterDisplay(2, state.community[2]);
+            updateCharacterDisplay(3, state.community[3]);
             
             drawNetwork();
         }
@@ -966,8 +1122,17 @@
         // CHARTS
         // ==========================================
         function initializeCharts() {
+            // Safety check - make sure chart containers exist
+            const eudaimoniaCanvas = document.getElementById('eudaimoniaChart');
+            const virtueDistCanvas = document.getElementById('virtueDistChart');
+            
+            if (!eudaimoniaCanvas || !virtueDistCanvas) {
+                console.log('Chart canvases not yet available');
+                return;
+            }
+            
             // Eudaimonia trajectory chart
-            const eudaimoniaCtx = document.getElementById('eudaimoniaChart').getContext('2d');
+            const eudaimoniaCtx = eudaimoniaCanvas.getContext('2d');
             eudaimoniaChart = new Chart(eudaimoniaCtx, {
                 type: 'line',
                 data: {
@@ -1008,7 +1173,7 @@
             });
             
             // Virtue distribution histogram
-            const virtueDistCtx = document.getElementById('virtueDistChart').getContext('2d');
+            const virtueDistCtx = virtueDistCanvas.getContext('2d');
             virtueDistChart = new Chart(virtueDistCtx, {
                 type: 'bar',
                 data: {
@@ -1144,18 +1309,29 @@
         }
 
         // ==========================================
-        // COMMUNITY DYNAMICS (ABM CORE)
+        // COMMUNITY DYNAMICS (ABM CORE) - NARRATIVE VERSION
         // ==========================================
+        
+        // Named characters (Sarah, Marcus, Elena are agents 1, 2, 3)
+        const namedCharacters = {
+            1: { name: "Sarah Chen", role: "graphic designer", startEud: 52 },
+            2: { name: "Marcus Rodriguez", role: "legal assistant", startEud: 45 },
+            3: { name: "Dr. Elena Patel", role: "research scientist", startEud: 58 }
+        };
+        
         function processCommunityEffects(playerChoice, testedVirtue) {
-            // Step 1: Social influence (Civic Loop potential)
-            const playerConnections = state.socialNetwork
-                .filter(e => e.source === 0 || e.target === 0)
-                .map(e => e.source === 0 ? e.target : e.source);
+            const narratives = []; // Store what happened for display
             
-            // Friends observe player's choice
-            playerConnections.forEach(friendId => {
+            // Step 1: Social influence on named characters
+            const friends = [1, 2, 3]; // Sarah, Marcus, Elena
+            
+            friends.forEach(friendId => {
                 const friend = state.community[friendId];
-                const influence = 0.15; // Social learning coefficient
+                const char = namedCharacters[friendId];
+                const influence = 0.15;
+                
+                const beforeCourage = friend.virtues.courage;
+                const beforeEud = friend.eudaimonia;
                 
                 // Virtue contagion
                 Object.keys(playerChoice.effects).forEach(virtue => {
@@ -1165,54 +1341,102 @@
                 });
                 
                 friend.eudaimonia = calculateEudaimonia(friend);
+                
+                // Generate narrative
+                const virtueChange = Math.round(friend.virtues[testedVirtue] - (50 + (Math.random()-0.5)*20));
+                const eudChange = friend.eudaimonia - beforeEud;
+                
+                if (playerChoice.effects[testedVirtue] > 0) {
+                    narratives.push({
+                        character: char.name,
+                        text: `<strong>${char.name}</strong> noticed your courage and was inspired. She felt ${eudChange > 0 ? 'more confident' : 'conflicted'} about her own challenges. (${testedVirtue} ${virtueChange > 0 ? '+' : ''}${Math.round(virtueChange)})`,
+                        type: 'positive'
+                    });
+                } else if (playerChoice.effects[testedVirtue] < 0) {
+                    narratives.push({
+                        character: char.name,
+                        text: `<strong>${char.name}</strong> saw your choice. She wondered if staying silent might be safer after all. (${testedVirtue} ${virtueChange > 0 ? '+' : ''}${Math.round(virtueChange)})`,
+                        type: 'negative'
+                    });
+                }
+                
+                // Update character display
+                updateCharacterDisplay(friendId, friend);
             });
             
-            // Step 2: BioBond Loop Activation
-            // When stress high, agents attempt self-repair
-            state.community.forEach(agent => {
+            // Step 2: BioBond Loop Activation with narrative
+            let biobondActivated = false;
+            state.community.forEach((agent, id) => {
                 if (agent.eudaimonia < 50 && Math.random() < 0.6) {
-                    // BioBond activated - personal practice
                     agent.stress = Math.max(0, agent.stress - 15);
                     agent.prfCoherence = Math.min(1.0, agent.prfCoherence + 0.05);
-                    if (agent.id === 0) state.repairLoops.biobond++;
+                    
+                    if (id === 2) { // Marcus
+                        narratives.push({
+                            character: "Marcus Rodriguez",
+                            text: `<strong>Marcus</strong> took time to process his feelings. He practiced mindfulness and talked with his therapist. His stress decreased. <em>(BioBond Loop activated - personal self-care)</em>`,
+                            type: 'repair'
+                        });
+                        biobondActivated = true;
+                    }
+                    
+                    if (id === 0) state.repairLoops.biobond++;
                 }
             });
             
-            // Step 3: Civic Loop Activation (only in metabolic institutions)
+            // Step 3: Civic Loop with narrative (only metabolic)
             if (state.institution === 'metabolic') {
-                // Community support - collective repair
-                const struggling = state.community.filter(a => a.eudaimonia < 40);
-                struggling.forEach(agent => {
-                    if (Math.random() < 0.4) {
-                        // Civic loop: peers provide support
+                const struggling = state.community.filter((a, i) => a.eudaimonia < 40 && i > 3);
+                struggling.forEach((agent, idx) => {
+                    if (Math.random() < 0.4 && idx === 0) {
                         agent.moralDebt = Math.max(0, agent.moralDebt - 5);
                         agent.stress = Math.max(0, agent.stress - 10);
-                        if (agent.id === 0) state.repairLoops.civic++;
+                        
+                        narratives.push({
+                            character: "Community",
+                            text: `<strong>Jamie</strong> (another community member) was struggling. Your friend group organized a support circle. They listened to Jamie's story, validated their feelings, and helped them see a path forward. <em>(Civic Loop activated - peer support)</em>`,
+                            type: 'repair'
+                        });
+                        
+                        state.repairLoops.civic++;
                     }
+                });
+            } else {
+                // Extractive - show blocked support
+                narratives.push({
+                    character: "System",
+                    text: `<strong>Jamie</strong> reached out for help, but the institution has no support systems. HR told them "figure it out yourself." Their moral debt increased. <em>(Civic Loop BLOCKED by extractive institution)</em>`,
+                    type: 'damage'
                 });
             }
             
-            // Step 4: Institutional Loop Activation
+            // Step 4: Institutional Loop with narrative
             const avgEudaimonia = state.community.reduce((sum, a) => sum + a.eudaimonia, 0) / 20;
             
             if (state.institution === 'metabolic' && avgEudaimonia < 60) {
-                // Institutional response: policy adjustment
                 state.community.forEach(agent => {
                     if (agent.eudaimonia < 50) {
-                        // Institution provides resources
                         agent.stress = Math.max(0, agent.stress - 20);
                         agent.moralDebt = Math.max(0, agent.moralDebt - 10);
-                        if (agent.id === 0) state.repairLoops.institutional++;
                     }
                 });
-            } else if (state.institution === 'extractive') {
-                // Extractive institution: punishment, no support
-                state.community.forEach(agent => {
-                    if (agent.eudaimonia < 40) {
-                        // Punishment adds stress
-                        agent.stress += 15;
-                        agent.moralDebt += 10;
-                    }
+                
+                narratives.push({
+                    character: "Institution",
+                    text: `<strong>Leadership noticed</strong> widespread stress around ethical dilemmas. They instituted a new policy: <em>anonymous whistleblower protection</em> and created a dedicated ethics hotline. Everyone's stress decreased. <em>(Institutional Loop activated - systemic change)</em>`,
+                    type: 'repair'
+                });
+                
+                state.repairLoops.institutional++;
+                
+            } else if (state.institution === 'extractive' && playerChoice.effects[testedVirtue] > 10) {
+                // Extractive punishes virtue
+                state.player.stress += 30;
+                
+                narratives.push({
+                    character: "Institution",
+                    text: `<strong>The institution retaliated.</strong> Your supervisor heard you reported the issue. You were put on a "performance improvement plan" - retaliation disguised as process. Your stress spiked. <em>(Extractive institution punishes virtue)</em>`,
+                    type: 'damage'
                 });
             }
             
@@ -1221,11 +1445,100 @@
                 agent.eudaimonia = calculateEudaimonia(agent);
             });
             
-            // Step 6: Update visualizations
+            // Step 6: Display narratives
+            displayCommunityNarrative(narratives);
+            
+            // Step 7: Update visualizations
             updateCommunityStats();
             updateCharts();
             drawNetwork();
             updateRepairLoopDisplay();
+        }
+        
+        function updateCharacterDisplay(friendId, agent) {
+            const names = {
+                1: { firstName: "Sarah", courageId: "sarahCourage", eudId: "sarahEudaimonia", statusId: "sarahStatus" },
+                2: { firstName: "Marcus", justiceId: "marcusJustice", eudId: "marcusEudaimonia", statusId: "marcusStatus" },
+                3: { firstName: "Elena", wisdomId: "elenaWisdom", eudId: "elenaEudaimonia", statusId: "elenaStatus" }
+            };
+            
+            const char = names[friendId];
+            if (!char) return;
+            
+            // Update virtue displays (with null checks)
+            if (friendId === 1) {
+                const el = document.getElementById(char.courageId);
+                if (el) el.textContent = Math.round(agent.virtues.courage);
+            }
+            if (friendId === 2) {
+                const el = document.getElementById(char.justiceId);
+                if (el) el.textContent = Math.round(agent.virtues.justice);
+            }
+            if (friendId === 3) {
+                const el = document.getElementById(char.wisdomId);
+                if (el) el.textContent = Math.round(agent.virtues.wisdom);
+            }
+            
+            // Update eudaimonia (with null check)
+            const eudEl = document.getElementById(char.eudId);
+            if (!eudEl) return;
+            
+            eudEl.textContent = Math.round(agent.eudaimonia);
+            
+            // Color based on level
+            if (agent.eudaimonia >= 75) eudEl.style.color = '#4CAF50';
+            else if (agent.eudaimonia >= 50) eudEl.style.color = '#667eea';
+            else if (agent.eudaimonia >= 25) eudEl.style.color = '#FF9800';
+            else eudEl.style.color = '#f44336';
+            
+            // Update status message (with null check)
+            const statusEl = document.getElementById(char.statusId);
+            if (!statusEl) return;
+            
+            if (agent.eudaimonia >= 70) {
+                statusEl.innerHTML = `✨ Inspired by your example. Feeling more confident.`;
+                statusEl.style.background = '#e8f5e9';
+                statusEl.style.color = '#2e7d32';
+            } else if (agent.eudaimonia >= 50) {
+                statusEl.innerHTML = `💭 Reflecting on your choice. Processing what it means.`;
+                statusEl.style.background = '#e3f2fd';
+                statusEl.style.color = '#1976d2';
+            } else if (agent.eudaimonia >= 30) {
+                statusEl.innerHTML = `😟 Struggling with doubts. Your choice raised questions.`;
+                statusEl.style.background = '#fff3e0';
+                statusEl.style.color = '#e65100';
+            } else {
+                statusEl.innerHTML = `😰 In crisis. Needs support urgently.`;
+                statusEl.style.background = '#ffebee';
+                statusEl.style.color = '#c62828';
+            }
+        }
+        
+        function displayCommunityNarrative(narratives) {
+            // Create a narrative box showing what happened
+            const narrativeBox = document.createElement('div');
+            narrativeBox.className = 'explanation-box';
+            narrativeBox.style.cssText = 'background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-left-color: #667eea; margin-top: 30px; animation: fadeIn 0.5s;';
+            
+            narrativeBox.innerHTML = `
+                <h4>🌐 What Happened In Your Community</h4>
+                <div style="margin-top: 20px;">
+                    ${narratives.map(n => {
+                        let color = '#666';
+                        let icon = '•';
+                        if (n.type === 'positive') { color = '#4CAF50'; icon = '✓'; }
+                        else if (n.type === 'negative') { color = '#FF9800'; icon = '⚠'; }
+                        else if (n.type === 'repair') { color = '#2196F3'; icon = '🔧'; }
+                        else if (n.type === 'damage') { color = '#f44336'; icon = '⚠'; }
+                        
+                        return `<p style="color: ${color}; margin: 15px 0; line-height: 1.8; font-size: 1.05em;">${icon} ${n.text}</p>`;
+                    }).join('')}
+                </div>
+            `;
+            
+            // Insert after scenario container
+            const scenarioContainer = document.getElementById('scenarioContainer');
+            scenarioContainer.appendChild(narrativeBox);
         }
 
         function updateCommunityStats() {
@@ -1235,8 +1548,9 @@
             document.getElementById('communityEudaimonia').textContent = Math.round(avgEudaimonia);
             document.getElementById('moralDebt').textContent = Math.round(state.player.moralDebt);
             
-            const connections = state.socialNetwork.filter(e => e.source === 0 || e.target === 0).length;
-            document.getElementById('socialInfluence').textContent = connections;
+            // Update institution display
+            document.getElementById('institutionType').textContent = state.institution === 'metabolic' ? '🌱' : '⚡';
+            document.getElementById('institutionName').textContent = state.institution === 'metabolic' ? 'Metabolic' : 'Extractive';
             
             // Update time series
             state.timeSeries.playerEudaimonia.push(state.player.eudaimonia);
@@ -1327,13 +1641,17 @@
         function showFinalResults() {
             showStep(3);
             
+            const communityAvg = state.mode === 'community' 
+                ? state.community.reduce((sum, a) => sum + a.eudaimonia, 0) / 20 
+                : null;
+            
             const finalHTML = `
                 <div style="text-align: center; padding: 40px;">
                     <h2>Simulation Complete</h2>
                     <p style="font-size: 1.2em; margin: 30px 0;">
                         ${state.mode === 'individual' 
                             ? 'You have completed the individual virtue development journey.'
-                            : `You experienced ${state.institution} institutional context over ${scenarios.length} scenarios.`
+                            : `You experienced a <strong>${state.institution}</strong> institution over ${scenarios.length} scenarios.`
                         }
                     </p>
                     
@@ -1341,45 +1659,104 @@
                         <div class="stat-card">
                             <div class="stat-label">Final Eudaimonia</div>
                             <div class="stat-value">${Math.round(state.player.eudaimonia)}</div>
+                            <div class="stat-change">${state.player.eudaimonia >= 75 ? 'Flourishing' : state.player.eudaimonia >= 50 ? 'Balanced' : state.player.eudaimonia >= 25 ? 'Struggling' : 'Crisis'}</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-label">Moral Debt</div>
                             <div class="stat-value">${Math.round(state.player.moralDebt)}</div>
+                            <div class="stat-change">${state.player.moralDebt === 0 ? 'Clean' : state.player.moralDebt < 20 ? 'Manageable' : 'Heavy'}</div>
                         </div>
                         ${state.mode === 'community' ? `
                             <div class="stat-card">
                                 <div class="stat-label">Community Impact</div>
-                                <div class="stat-value">${Math.round(state.community.reduce((sum, a) => sum + a.eudaimonia, 0) / 20)}</div>
+                                <div class="stat-value">${Math.round(communityAvg)}</div>
+                                <div class="stat-change">${communityAvg >= 55 ? 'Thriving' : communityAvg >= 45 ? 'Holding' : 'Declining'}</div>
                             </div>
                             <div class="stat-card">
-                                <div class="stat-label">Total Repair Activations</div>
+                                <div class="stat-label">Total Repairs</div>
                                 <div class="stat-value">${state.repairLoops.biobond + state.repairLoops.civic + state.repairLoops.institutional}</div>
+                                <div class="stat-change">Soul Restoration Events</div>
                             </div>
                         ` : ''}
                     </div>
                     
                     ${state.mode === 'community' ? `
-                        <div class="explanation-box" style="margin: 40px auto; max-width: 800px; text-align: left;">
-                            <h4>🔬 What You Experienced</h4>
-                            <p><strong>Multi-Scale Moral Dynamics:</strong> Your individual choices rippled through the social network, 
-                            triggering repair loops at three levels:</p>
-                            <ul style="margin: 15px 0 0 25px; line-height: 2;">
-                                <li><strong>BioBond (Individual):</strong> ${state.repairLoops.biobond} activations - personal resilience and self-repair</li>
-                                <li><strong>Civic (Social):</strong> ${state.repairLoops.civic} activations - peer support and collective sensemaking</li>
-                                <li><strong>Institutional (Systemic):</strong> ${state.repairLoops.institutional} activations - policy-level adaptation</li>
-                            </ul>
-                            <p style="margin-top: 15px;"><strong>Pattern Preservation:</strong> 
-                            ${state.institution === 'metabolic' 
-                                ? 'The metabolic institution maintained high morphic fidelity—policy responses matched population needs, preserving PRF coherence across the community.'
-                                : 'The extractive institution showed low morphic fidelity—policy ignored or worsened stress, accumulating moral debt that damaged soul coherence.'
-                            }
+                        <div class="explanation-box" style="margin: 40px auto; max-width: 900px; text-align: left;">
+                            <h4>🔬 What You Discovered</h4>
+                            
+                            <div style="background: white; padding: 25px; border-radius: 10px; margin: 20px 0;">
+                                <h3 style="color: #667eea; margin-bottom: 15px;">Multi-Scale Moral Dynamics</h3>
+                                <p style="line-height: 1.8; margin-bottom: 15px;">
+                                    Your individual choices rippled through three levels of the system:
+                                </p>
+                                <ul style="margin-left: 25px; line-height: 2;">
+                                    <li><strong>🧘 BioBond (Individual):</strong> ${state.repairLoops.biobond} activations - Personal resilience through self-care and reflection</li>
+                                    <li><strong>🤝 Civic (Social):</strong> ${state.repairLoops.civic} activations - Peer support circles and collective sensemaking</li>
+                                    <li><strong>🏛️ Institutional (Systemic):</strong> ${state.repairLoops.institutional} activations - Policy-level adaptation and protection</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="background: ${state.institution === 'metabolic' ? '#e8f5e9' : '#ffebee'}; padding: 25px; border-radius: 10px; margin: 20px 0; border-left: 4px solid ${state.institution === 'metabolic' ? '#4CAF50' : '#f44336'};">
+                                <h3 style="color: ${state.institution === 'metabolic' ? '#2e7d32' : '#c62828'}; margin-bottom: 15px;">
+                                    ${state.institution === 'metabolic' ? '🌱 Metabolic Institution Impact' : '⚡ Extractive Institution Impact'}
+                                </h3>
+                                <p style="line-height: 1.8;">
+                                    ${state.institution === 'metabolic' 
+                                        ? `The metabolic institution maintained <strong>high morphic fidelity</strong>—policy responses matched population needs. When people struggled, repair loops activated. PRF coherence (soul integrity) was preserved across the community. <strong>Pattern preservation</strong> worked: virtuous individuals → supportive peers → enabling policies.`
+                                        : `The extractive institution showed <strong>low morphic fidelity</strong>—policy ignored or worsened stress. Civic and Institutional loops were blocked. Moral debt accumulated across the network. Soul damage cascaded. Even virtuous choices led to punishment and retaliation. <strong>Pattern breaking</strong>: good individuals → unsupported peers → punitive policies.`
+                                    }
+                                </p>
+                            </div>
+                            
+                            <div style="background: #f3e5f5; padding: 25px; border-radius: 10px; margin: 20px 0;">
+                                <h3 style="color: #6a1b9a; margin-bottom: 15px;">Your Friends' Outcomes</h3>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                    <div>
+                                        <strong>🎨 Sarah Chen:</strong><br>
+                                        Final Eudaimonia: <strong style="color: ${state.community[1].eudaimonia >= 60 ? '#4CAF50' : state.community[1].eudaimonia >= 45 ? '#FF9800' : '#f44336'};">${Math.round(state.community[1].eudaimonia)}</strong><br>
+                                        ${state.community[1].eudaimonia >= 60 ? '✨ Inspired and thriving' : state.community[1].eudaimonia >= 45 ? '💭 Still processing' : '😰 Struggling significantly'}
+                                    </div>
+                                    <div>
+                                        <strong>⚖️ Marcus Rodriguez:</strong><br>
+                                        Final Eudaimonia: <strong style="color: ${state.community[2].eudaimonia >= 60 ? '#4CAF50' : state.community[2].eudaimonia >= 45 ? '#FF9800' : '#f44336'};">${Math.round(state.community[2].eudaimonia)}</strong><br>
+                                        ${state.community[2].eudaimonia >= 60 ? '✨ Found moral clarity' : state.community[2].eudaimonia >= 45 ? '💭 Cautiously hopeful' : '😰 In moral crisis'}
+                                    </div>
+                                    <div>
+                                        <strong>🔬 Dr. Elena Patel:</strong><br>
+                                        Final Eudaimonia: <strong style="color: ${state.community[3].eudaimonia >= 60 ? '#4CAF50' : state.community[3].eudaimonia >= 45 ? '#FF9800' : '#f44336'};">${Math.round(state.community[3].eudaimonia)}</strong><br>
+                                        ${state.community[3].eudaimonia >= 60 ? '✨ Strengthened wisdom' : state.community[3].eudaimonia >= 45 ? '💭 Reassessing approach' : '😰 Deeply troubled'}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 10px; border-left: 4px solid #2196F3;">
+                                <h4 style="color: #1565c0; margin-bottom: 10px;">💡 Key Insight</h4>
+                                <p style="font-size: 1.1em; line-height: 1.8;">
+                                    <strong>Same virtuous choices → Opposite outcomes based on institutional design.</strong><br>
+                                    This demonstrates that ethics isn't just about individual character—it's about whether 
+                                    institutions enable or destroy the capacity for virtue. Aristotle knew this: 
+                                    "The polis exists to make eudaimonia possible."
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="explanation-box" style="margin: 40px auto; max-width: 900px; text-align: left; background: #fff3e0; border-left-color: #f57c00;">
+                            <h4>🎓 What To Try Next</h4>
+                            <p style="line-height: 1.8; margin-bottom: 15px;">
+                                Run the simulation again with the <strong>opposite institution type</strong>. 
+                                Make the same choices and watch completely different outcomes emerge. 
+                                This shows the power (and danger) of institutional design.
+                            </p>
+                            <p style="line-height: 1.8;">
+                                Or try <strong>Individual Mode</strong> to focus purely on personal virtue development 
+                                without social dynamics—the classical Aristotelian approach.
                             </p>
                         </div>
                     ` : ''}
                     
-                    <div class="button-container">
+                    <div class="button-container" style="margin-top: 40px;">
                         <button class="btn-primary" onclick="location.reload()">
-                            Start New Simulation
+                            🔄 Start New Simulation
                         </button>
                     </div>
                 </div>
@@ -1398,6 +1775,12 @@
             
             if (stepNum === 1) {
                 document.getElementById('step1').classList.add('active');
+                // Show/hide institutional context based on mode
+                if (state.mode === 'community') {
+                    document.getElementById('institutionalContext').style.display = 'block';
+                } else {
+                    document.getElementById('institutionalContext').style.display = 'none';
+                }
             } else if (stepNum === 2) {
                 document.getElementById('scenarioStep').classList.add('active');
             } else if (stepNum === 3) {
@@ -1405,6 +1788,312 @@
             }
             
             state.currentStep = stepNum;
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // INTERACTIVE DEMO/TUTORIAL
+        // ==========================================
+        let tutorialMode = false;
+        let tutorialStep = 0;
+
+        function startInteractiveTutorial() {
+            tutorialMode = true;
+            tutorialStep = 0;
+            
+            // Hide mode selector
+            document.querySelector('.mode-selector').style.display = 'none';
+            
+            // Initialize with demo scenario
+            state.mode = 'community';
+            state.institution = 'metabolic';
+            initializeCommunity();
+            
+            // Show first tutorial step
+            showTutorialStep(0);
+        }
+
+        function showTutorialStep(step) {
+            const overlay = document.createElement('div');
+            overlay.id = 'tutorialOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.85);
+                z-index: 1000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+            `;
+            
+            const tutorialSteps = [
+                {
+                    title: "🎓 Interactive Demo: See How It Works",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            Let me show you <strong>exactly</strong> what happens when you make a choice 
+                            in Community Mode. We'll watch the effects ripple through the network in real-time.
+                        </p>
+                        <p style="font-size: 1.1em; line-height: 1.8;">
+                            I've created a small community of 20 people. You're connected to 3 friends: 
+                            <strong style="color: #667eea;">Sarah</strong>, 
+                            <strong style="color: #667eea;">Marcus</strong>, and 
+                            <strong style="color: #667eea;">Elena</strong>.
+                        </p>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            We're in a <strong style="color: #4CAF50;">Metabolic Institution</strong> 
+                            (supportive school/workplace).
+                        </p>
+                    `,
+                    buttonText: "Show Me What Happens →"
+                },
+                {
+                    title: "📖 The Scenario",
+                    content: `
+                        <div style="background: #f8f9fa; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">The Dangerous Truth</h3>
+                            <p style="font-size: 1.1em; line-height: 1.8;">
+                                You witness your supervisor falsifying safety reports. Speaking up could 
+                                cost you your job. Staying silent might endanger coworkers.
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            This tests <strong>COURAGE</strong> - the virtue of facing fear appropriately.
+                        </p>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            Let's say you choose: <strong style="color: #4CAF50;">"Report through proper channels"</strong>
+                            (the virtuous choice - golden mean between cowardice and recklessness).
+                        </p>
+                    `,
+                    buttonText: "Watch The Ripple Effects →"
+                },
+                {
+                    title: "⚡ Step 1: Your Soul Changes",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            <strong>Direct effects on YOU:</strong>
+                        </p>
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 1.05em; margin: 10px 0;">
+                                ✅ <strong>Courage:</strong> +15 (you practiced bravery)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 10px 0;">
+                                ✅ <strong>Justice:</strong> +15 (you did the right thing)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 10px 0;">
+                                ✅ <strong>Wisdom:</strong> +10 (you used good judgment)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 10px 0;">
+                                ✅ <strong>PRF Coherence:</strong> No damage (actions match values)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 10px 0;">
+                                ✅ <strong>Moral Debt:</strong> None accumulated
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            Your <strong>Eudaimonia</strong> (flourishing) increases because your virtues 
+                            moved closer to the golden mean and you maintained soul coherence.
+                        </p>
+                    `,
+                    buttonText: "See Social Effects →"
+                },
+                {
+                    title: "🤝 Step 2: Your Friends Notice",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            <strong>Your 3 friends observe your choice:</strong>
+                        </p>
+                        <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong style="color: #667eea;">Sarah</strong> sees you act courageously. 
+                                Her courage increases by <strong>+2</strong> (social learning).
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong style="color: #667eea;">Marcus</strong> notices. 
+                                His courage increases by <strong>+3</strong>.
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong style="color: #667eea;">Elena</strong> is inspired. 
+                                Her courage increases by <strong>+2</strong>.
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            This is <strong style="color: #667eea;">social contagion</strong> - 
+                            virtue spreads through your network. Your courage made courage more likely in others.
+                        </p>
+                        <p style="font-size: 1em; margin-top: 15px; color: #666; font-style: italic;">
+                            (In the network graph, you'd see your friends' circles shift toward green)
+                        </p>
+                    `,
+                    buttonText: "See Repair Loops Activate →"
+                },
+                {
+                    title: "🧘 Step 3: Repair Loops Activate",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            But what about people who ARE struggling? The system responds:
+                        </p>
+                        <div style="background: #fff3e0; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong>🧘 BioBond Loop:</strong> 
+                                Marcus was stressed before (eudaimonia 48). He takes time for self-care. 
+                                Stress reduced by 15 points. He recovers.
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong>🤝 Civic Loop:</strong> 
+                                Another community member, Jamie (eudaimonia 35), gets peer support. 
+                                Your friend group helps them process their moral struggle. 
+                                Moral debt reduced by 5.
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                <strong>🏛️ Institutional Loop:</strong> 
+                                The institution notices several people struggling with similar whistleblowing dilemmas. 
+                                HR creates a new anonymous reporting system. Protection policy implemented. 
+                                Community-wide stress reduced by 20.
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            These loops ONLY work because we're in a <strong style="color: #4CAF50;">Metabolic Institution</strong>. 
+                            In an extractive one, these supports would be blocked.
+                        </p>
+                    `,
+                    buttonText: "See Final Results →"
+                },
+                {
+                    title: "📊 Step 4: Community Transformation",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            <strong>Final Effects Across The Entire Community:</strong>
+                        </p>
+                        <div style="background: #e8f5e9; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Your eudaimonia:</strong> 50 → 67 (+17 points)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Community average:</strong> 50 → 54 (+4 points)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Your 3 friends:</strong> All improved (courage spread)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Struggling members:</strong> 3 people recovered through repair loops
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Institutional change:</strong> New policy protects future whistleblowers
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px;">
+                            <strong>This is emergence:</strong> Your one choice created ripples at three levels 
+                            (individual → social → institutional), transforming the entire community's capacity for virtue.
+                        </p>
+                    `,
+                    buttonText: "Compare: What If Extractive? →"
+                },
+                {
+                    title: "⚡ The Extractive Alternative",
+                    content: `
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">
+                            <strong>Same choice, but in an EXTRACTIVE institution:</strong>
+                        </p>
+                        <div style="background: #ffebee; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>You still improve:</strong> Your personal virtues increase
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ✅ <strong>Friends still notice:</strong> Social contagion still happens
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ❌ <strong>BUT: No Civic Loop</strong> - Jamie gets no peer support (blocked)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ❌ <strong>No Institutional Loop</strong> - HR ignores the problem
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ❌ <strong>Worse: Institution punishes you</strong> - You're fired for reporting
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ❌ <strong>Your stress spikes:</strong> +30 points (retaliation trauma)
+                            </p>
+                            <p style="font-size: 1.05em; margin: 15px 0;">
+                                ❌ <strong>Jamie collapses:</strong> Moral debt +20, eudaimonia 35 → 18
+                            </p>
+                        </div>
+                        <p style="font-size: 1.1em; line-height: 1.8; margin-top: 20px; color: #f44336;">
+                            <strong>Result:</strong> You tried to be virtuous, but the extractive institution 
+                            damaged your soul anyway. This is <em>moral injury</em> - doing the right thing 
+                            gets punished instead of supported.
+                        </p>
+                    `,
+                    buttonText: "I Understand - Start Simulation →"
+                }
+            ];
+            
+            const currentStep = tutorialSteps[step];
+            
+            overlay.innerHTML = `
+                <div style="background: white; padding: 40px; border-radius: 20px; max-width: 800px; max-height: 90vh; overflow-y: auto;">
+                    <h2 style="color: #667eea; margin-bottom: 30px; font-size: 2em;">
+                        ${currentStep.title}
+                    </h2>
+                    <div style="line-height: 1.8;">
+                        ${currentStep.content}
+                    </div>
+                    <div style="display: flex; gap: 20px; margin-top: 40px; justify-content: center;">
+                        ${step > 0 ? `
+                            <button onclick="previousTutorialStep()" style="padding: 15px 30px; font-size: 18px; background: #e0e0e0; border: none; border-radius: 10px; cursor: pointer;">
+                                ← Back
+                            </button>
+                        ` : ''}
+                        <button onclick="nextTutorialStep()" style="padding: 15px 30px; font-size: 18px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                            ${currentStep.buttonText}
+                        </button>
+                    </div>
+                    ${step === 0 ? `
+                        <p style="text-align: center; margin-top: 20px; color: #666;">
+                            <a href="#" onclick="skipTutorial()" style="color: #667eea; text-decoration: none;">
+                                Skip tutorial and explore on my own →
+                            </a>
+                        </p>
+                    ` : ''}
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+        }
+
+        function nextTutorialStep() {
+            document.getElementById('tutorialOverlay').remove();
+            tutorialStep++;
+            
+            if (tutorialStep >= 7) {
+                // Tutorial complete
+                tutorialMode = false;
+                document.getElementById('communityDashboard').style.display = 'block';
+                initializeCharts();
+                showScenario(0);
+                showStep(2);
+            } else {
+                showTutorialStep(tutorialStep);
+            }
+        }
+
+        function previousTutorialStep() {
+            document.getElementById('tutorialOverlay').remove();
+            tutorialStep--;
+            showTutorialStep(tutorialStep);
+        }
+
+        function skipTutorial() {
+            document.getElementById('tutorialOverlay').remove();
+            tutorialMode = false;
+            // Show step 1 (character creation/institutional selection)
+            showStep(1);
         }
 
         // ==========================================
@@ -1423,11 +2112,15 @@
         }
 
         // ==========================================
-        // INITIALIZATION
+        // INITIALIZATION ON PAGE LOAD
         // ==========================================
         window.addEventListener('load', () => {
-            console.log('Virtue Ethics Community ABM loaded');
-            // Start in individual mode by default
+            console.log('Virtue Ethics Community ABM loaded successfully');
+            console.log('Current mode:', state.mode);
+            console.log('Chart.js available:', typeof Chart !== 'undefined');
+            
+            // Make sure mode selector is visible
+            document.querySelector('.mode-selector').style.display = 'block';
         });
     </script>
 </body>
